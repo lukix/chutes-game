@@ -8,3 +8,7 @@ Player.prototype.deploy = function () {
 	this.deployed = true
 	this.color = 'white'
 }
+Player.prototype.draw = function (ctx) {
+	ctx.fillStyle = this.color
+	ctx.fillRect(this.coords.x, this.coords.y, 30, 30)
+}

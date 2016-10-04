@@ -1,6 +1,6 @@
 function Game(ctx) {
 	this.players = []
-	this.g = 150
+	this.g = 300
 	this.density = 0.00004
 	this.ctx = ctx
 }
@@ -41,7 +41,7 @@ Game.prototype.update = function (dt) {
 		player.v.y += self.g * dt
 		var drag = Math.pow(player.v.y, 2) * self.density
 		if(player.deployed)
-			drag *= 10
+			drag *= 15
 		player.v.y -= drag
 		player.coords.y += player.v.y * dt
 	})
@@ -50,7 +50,6 @@ Game.prototype.draw = function () {
 	var self = this
 	self.ctx.clearRect(0, 0, 800, 600)
 	this.players.forEach(function (player) {
-		self.ctx.fillStyle = player.color
-		self.ctx.fillRect(player.coords.x, player.coords.y, 50, 50)
+		player.draw(self.ctx)
 	})
 }
