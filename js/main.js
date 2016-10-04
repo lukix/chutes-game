@@ -7,7 +7,7 @@
 	Array.prototype.slice.apply(playerButtons).forEach(function(button) {
 		button.addEventListener('click', function() {
 			document.getElementById('menu').style.display = 'none'
-			game.addPlayers(button.value)
+			game.addPlayers(parseInt(button.value))
 		})
 	})
 

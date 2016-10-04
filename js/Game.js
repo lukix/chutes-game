@@ -10,18 +10,17 @@ Game.prototype.addPlayers = function (amount) {
 	var self = this
 	for(var i = 0; i < amount; ++i){
 		this.players.push(new Player({
-			x: self.ctx.canvas.width / 2 + (i - amount / 2) * self.ctx.canvas.width / amount,
+			x: (i + 1) * self.ctx.canvas.width / (amount + 1),
 			y: 50
 		}, Game.colors[i]))
 	}
-
 	self.setListeners([81, 86, 77, 80])	//q, v, m, p
 	self.play()
 }
 Game.prototype.setListeners = function (keyCodes) {
 	if(keyCodes.length < this.players.length)
 		throw new Error('')
-		
+
 	var self = this
 	window.addEventListener('keydown', function (e) {
 		//console.log(e.keyCode)
