@@ -23,10 +23,10 @@ ul{
 li { margin-bottom: 20px; }
 li:last-of-type { margin: 0; }
 button {
-   -webkit-transition: all 0.35s;
-   -moz-transition: all 0.35s;
-   -o-transition: all 0.35s;
-   transition: all 0.35s;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   -o-transition: all 0.3s;
+   transition: all 0.33s;
 
    background: rgb(87, 108, 31);
    border: none;
@@ -52,4 +52,7 @@ button:hover {
 #title {
    margin-top: 20px;
    font-size: 5rem;
+}
+#keyCodes {
+   margin: 0 auto;
 }

@@ -20,19 +20,15 @@ Game.prototype.addPlayers = function (amount) {
 			y: 50
 		}, Game.colors[i]))
 	}
-	self.setListeners()
-	self.play()
-
-	console.log(Math.sqrt(Game.Vmax2), Math.sqrt(Game.Vmin2))
 }
-Game.prototype.setListeners = function () {
-	if(Game.keyCodes.length < this.players.length)
+Game.prototype.setListeners = function (keyCodes) {
+	if(keyCodes.length < this.players.length)
 		throw new Error('Too few key codes')
 
 	var self = this
 	window.addEventListener('keyup', function (e) {
 		//console.log(e.keyCode)
-		var index = Game.keyCodes.indexOf(e.keyCode)
+		var index = keyCodes.indexOf(e.keyCode)
 		if(index !== -1) {
 			self.players[index].deploy()
 		}
