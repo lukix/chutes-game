@@ -4,19 +4,20 @@ function Game(ctx) {
 	this.density = 0.00004
 	this.ctx = ctx
 }
-Game.prototype.addPlayer = function (player) {
-	this.players.push(player)
-}
-Game.prototype.init = function () {
-	this.addPlayer(new Player({x: 100, y: 50}, 'red'))
-	this.addPlayer(new Player({x: 300, y: 50}, 'green'))
-	this.addPlayer(new Player({x: 500, y: 50}, 'blue'))
-	this.addPlayer(new Player({x: 700, y: 50}, '#f0f'))
+Game.colors = ['red', 'blue', 'green', 'yellow']
+Game.prototype.addPlayers = function (amount) {
 	var self = this
+	for(var i = 0; i < amount; ++i){
+		this.players.push(new Player({
+			x: self.ctx.canvas.width / 2 + (i - amount / 2) * self.ctx.canvas.width / amount,
+			y: 50
+		}, Game.colors[i]))
+	}
+
+	self.setListeners([81, 86, 77, 80])	//q, v, m, p
+	self.play()
 }
 Game.prototype.setListeners = function (keyCodes) {
-	if(keyCodes.length !== this.players.length)
-		throw new Error('')
 	var self = this
 	window.addEventListener('keydown', function (e) {
 		for(var i = 0; i < self.players.length; i++) {
