@@ -5,6 +5,13 @@ function Player(coords, color) {
 	this.deployed = false
 	this.width = 30
 	this.height = 30
+	this.alive = true
+}
+Player.prototype.kill = function () {
+	this.alive = false
+}
+Player.prototype.isAlive = function () {
+	return this.alive
 }
 Player.prototype.deploy = function () {
 	this.deployed = true
@@ -14,7 +21,7 @@ Player.prototype.draw = function (ctx) {
 	ctx.fillStyle = this.color
 	ctx.fillRect(
 		this.coords.x - this.width / 2,
-		this.coords.y - this.height / 2, 
+		this.coords.y - this.height / 2,
 		this.width,
 		this.height
 	)
