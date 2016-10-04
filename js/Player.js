@@ -5,6 +5,7 @@ function Player(coords, color) {
 	this.width = 30
 	this.height = 30
 	this.onGround = false
+	this.alive = true
 	this.deployed = false
 	this.hp = Player.maxHp
 	this.points = 0
@@ -14,8 +15,8 @@ Player.maxHp = 100
 Player.prototype.land = function () {
 	this.onGround = true
 }
-Player.prototype.isAlive = function () {
-	return this.alive
+Player.prototype.kill = function () {
+	this.alive = false
 }
 Player.prototype.deploy = function () {
 	this.deployed = true

@@ -9,7 +9,7 @@ Game.g = 300
 Game.density = 0.004
 Game.maxDragRatio = 15
 Game.deploySpeed = 0.5
-Game.Vmax2 = Game.g / Game.density * 0.95
+Game.Vmax2 = Game.g / Game.density * 0.9
 Game.Vmin2 = Game.g / Game.density / Game.maxDragRatio
 
 Game.prototype.addPlayers = function (amount) {
@@ -23,18 +23,19 @@ Game.prototype.addPlayers = function (amount) {
 	self.setListeners()
 	self.play()
 
-	console.log(Game.Vmax, Game.Vmin)
+	console.log(Math.sqrt(Game.Vmax2), Math.sqrt(Game.Vmin2))
 }
 Game.prototype.setListeners = function () {
 	if(Game.keyCodes.length < this.players.length)
 		throw new Error('Too few key codes')
 
 	var self = this
-	window.addEventListener('keydown', function (e) {
+	window.addEventListener('keyup', function (e) {
 		//console.log(e.keyCode)
 		var index = Game.keyCodes.indexOf(e.keyCode)
-		if(index !== -1)
+		if(index !== -1) {
 			self.players[index].deploy()
+		}
 	})
 }
 Game.prototype.play = function () {
@@ -50,14 +51,15 @@ Game.prototype.update = function (dt) {
 	var self = this
 	self.players.forEach(function (player, index) {
 		if(!player.onGround){
-
 			player.v.y += Game.g * dt
 			var drag = Math.pow(player.v.y, 2) * Game.density
 
-			if(player.deployed)
-				if(player.dragRatio < Game.maxDragRatio)
+			if(player.deployed) {
+				if(player.dragRatio < Game.maxDragRatio) {
 					player.dragRatio += dt * Game.maxDragRatio * Game.deploySpeed
+				}
 				drag *= player.dragRatio
+			}
 			player.v.y -= drag * dt
 			player.coords.y += player.v.y * dt
 
@@ -68,15 +70,26 @@ Game.prototype.update = function (dt) {
 Game.prototype.draw = function () {
 	var self = this
 	self.ctx.clearRect(0, 0, 800, 600)
+	self.ctx.fillStyle = "rgb(30, 189, 155)"
+	self.ctx.fillRect(0, self.groundPosition, self.ctx.canvas.width, 30)
 	self.players.forEach(function (player) {
 		player.draw(self.ctx)
 	})
 }
 
 Game.prototype.collisionControl = function (player, index) {
-	if(player.coords.y > this.groundPosition) {
-		var damage = Player.maxHp / Game.V
-		player.hp -= player.v.y / 3
+	if(player.coords.y + player.height / 4> this.groundPosition) {
+		var dmgRatio = Player.maxHp / (Game.Vmax2 - Game.Vmin2)
+		var dmg = dmgRatio * (Math.pow(player.v.y, 2) - Game.Vmin2)
+
+		if(dmg > 0) {
+			player.hp -= dmg
+		}
+		if(player.hp <= 0) {
+			player.hp = 0
+			player.kill()
+		}
+
 		console.log('player ' + index + ' landing velocity = ' + player.v.y +' hp: ' + player.hp)
 		player.land()
 	}

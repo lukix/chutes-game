@@ -8,6 +8,13 @@
 		button.addEventListener('click', function() {
 			document.getElementById('menu').style.display = 'none'
 			game.addPlayers(parseInt(button.value))
+
 		})
 	})
+
+	function assignKeys() {
+		window.addEventListener('keydown', function(e) {
+
+		})
+	}
 })()
