@@ -10,5 +10,4 @@
 			game.addPlayers(parseInt(button.value))
 		})
 	})
-
 })()
