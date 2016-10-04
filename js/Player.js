@@ -3,6 +3,8 @@ function Player(coords, color) {
 	this.v = {x: 0, y: 0}
 	this.color = color
 	this.deployed = false
+	this.width = 30
+	this.height = 30
 }
 Player.prototype.deploy = function () {
 	this.deployed = true
@@ -10,5 +12,10 @@ Player.prototype.deploy = function () {
 }
 Player.prototype.draw = function (ctx) {
 	ctx.fillStyle = this.color
-	ctx.fillRect(this.coords.x, this.coords.y, 30, 30)
+	ctx.fillRect(
+		this.coords.x - this.width / 2,
+		this.coords.y - this.height / 2, 
+		this.width,
+		this.height
+	)
 }
