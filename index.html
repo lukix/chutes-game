@@ -3,23 +3,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Chutes</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
-			body {
-				background: #333;
-				text-align: center;
-			}
-			#cvs {
-				border: 1px solid white;
-				margin: 0 auto;
-			}
-		</style>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-		<canvas id="cvs" width="800" height="600"></canvas>
+		<div id="viewport">
+			<ul>
+				<li><button class="player-btn" value="1" type="button">1 player</button></li>
+				<li><button class="player-btn" value="2" type="button">2 players</button></li>
+				<li><button class="player-btn" value="3" type="button">3 players</button></li>
+				<li><button class="player-btn" value="4" type="button">4 players</button></li>
+			</ul>
+
+			<canvas id="cvs" width="800" height="600"></canvas>
+		</div>
+
 		<script src="js/Player.js"></script>
 		<script src="js/Game.js"></script>
 		<script src="js/main.js"></script>
