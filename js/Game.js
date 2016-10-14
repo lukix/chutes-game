@@ -65,7 +65,13 @@ Game.prototype.update = function (dt) {
 }
 Game.prototype.draw = function () {
 	var self = this
-	self.ctx.clearRect(0, 0, 800, 600)
+
+	//Clearing canvas
+	self.ctx.save()
+	self.ctx.setTransform(1, 0, 0, 1, 0, 0)
+	self.ctx.clearRect(0, 0, self.ctx.canvas.width, self.ctx.canvas.height)
+	self.ctx.restore()
+	
 	self.ctx.fillStyle = "rgb(30, 189, 155)"
 	self.ctx.fillRect(0, self.groundPosition, self.ctx.canvas.width, 30)
 	self.players.forEach(function (player) {
