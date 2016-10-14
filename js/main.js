@@ -24,7 +24,7 @@
 
 			if(keyCodes.length === amount && run) {
 				run = false
-				console.log(keyCodes)
+				//console.log(keyCodes)
 				game.setListeners(keyCodes)
 				game.play()
 			}

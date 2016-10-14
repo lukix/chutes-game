@@ -1,5 +1,6 @@
 function Game(ctx) {
 	this.players = []
+	this.points = []
 	this.ctx = ctx
 	this.groundPosition = 500
 }
@@ -11,6 +12,9 @@ Game.maxDragRatio = 15
 Game.deploySpeed = 0.5
 Game.Vmax2 = Game.g / Game.density * 0.9
 Game.Vmin2 = Game.g / Game.density / Game.maxDragRatio
+Game.firstRewarded = false
+Game.deathPoints = -1
+Game.livePoints = 3
 
 Game.prototype.addPlayers = function (amount) {
 	var self = this
@@ -19,6 +23,7 @@ Game.prototype.addPlayers = function (amount) {
 			x: (i + 1) * self.ctx.canvas.width / (amount + 1),
 			y: 50
 		}, Game.colors[i]))
+		this.points.push(0)
 	}
 }
 Game.prototype.setListeners = function (keyCodes) {
@@ -39,9 +44,10 @@ Game.prototype.play = function () {
 	function run() {
 		self.update(1/60)
 		self.draw()
-		requestAnimationFrame(run)
+		window.requestAnimationFrame(run)
 	}
-	run()
+
+	window.requestAnimationFrame(run)
 }
 Game.prototype.update = function (dt) {
 	var self = this
@@ -74,19 +80,24 @@ Game.prototype.draw = function () {
 }
 
 Game.prototype.collisionControl = function (player, index) {
-	if(player.coords.y + player.height / 4> this.groundPosition) {
+	if(player.coords.y + player.height / 4 > this.groundPosition) {
 		var dmgRatio = Player.maxHp / (Game.Vmax2 - Game.Vmin2)
-		var dmg = dmgRatio * (Math.pow(player.v.y, 2) - Game.Vmin2)
+		var dmg = Math.floor(dmgRatio * (Math.pow(player.v.y, 2) - Game.Vmin2))
 
-		if(dmg > 0) {
-			player.hp -= dmg
-		}
-		if(player.hp <= 0) {
+		if(dmg > 0) { player.hp -= dmg }
+
+		if(player.hp <= Math.floor(0) && player.alive) {
 			player.hp = 0
 			player.kill()
+			this.points[index] += Game.deathPoints
+		}
+		else if (!Game.firstRewarded) {
+			this.points[index] += Game.livePoints
+			Game.firstRewarded = true
 		}
 
-		console.log('player ' + index + ' landing velocity = ' + player.v.y +' hp: ' + player.hp)
+		console.log('player ' + index + ' velocity: ' + player.v.y +' hp: ' + player.hp)
+		console.log('player ' + index + ' points = ' + this.points[index])
 		player.land()
 	}
 }
