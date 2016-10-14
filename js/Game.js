@@ -1,6 +1,7 @@
 function Game(ctx) {
 	this.players = []
 	this.ctx = ctx
+	this.camera = new Camera(ctx)
 	this.groundPosition = 500
 }
 Game.colors = ['red', 'blue', 'green', 'yellow', 'violet', 'orange']
@@ -65,6 +66,13 @@ Game.prototype.update = function (dt) {
 }
 Game.prototype.draw = function () {
 	var self = this
+
+	//Tracking the player who is at the lowest point
+	var theLowest = Math.max.apply(this, self.players.map(function (player) {
+		return player.coords.y
+	}))
+	this.camera.moveTo(self.ctx.canvas.width/2, theLowest)
+	this.camera.zoom(1.001)
 
 	//Clearing canvas
 	self.ctx.save()
