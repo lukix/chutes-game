@@ -25,13 +25,18 @@ Camera.prototype.zoom = function (k) {
 	this.refresh()
 }
 Camera.prototype.refresh = function() {
-	var self = this
 	this.ctx.setTransform(
 		this.transformValues.scaleX,
 		0,
 		0,
 		this.transformValues.scaleY,
-		(-this.transformValues.dx*this.transformValues.scaleX + self.origin.x),
-		(-this.transformValues.dy*this.transformValues.scaleY + self.origin.y)
+		(-this.transformValues.dx*this.transformValues.scaleX + this.origin.x),
+		(-this.transformValues.dy*this.transformValues.scaleY + this.origin.y)
 	)
+}
+Camera.prototype.getViewSize = function () {
+	return {
+		width: this.ctx.canvas.width / this.transformValues.scaleX,
+		height: this.ctx.canvas.height / this.transformValues.scaleY
+	}
 }

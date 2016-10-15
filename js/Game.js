@@ -71,7 +71,9 @@ Game.prototype.draw = function () {
 	var theLowest = Math.max.apply(this, self.players.map(function (player) {
 		return player.coords.y
 	}))
-	this.camera.moveTo(self.ctx.canvas.width/2, theLowest)
+	var bottomLimit = self.groundPosition + 100
+	var target = Math.min(theLowest, bottomLimit - self.camera.getViewSize().height / 2)
+	this.camera.moveTo(self.ctx.canvas.width / 2, target)
 
 	//Clearing canvas
 	self.ctx.save()
