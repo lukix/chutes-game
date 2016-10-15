@@ -72,7 +72,6 @@ Game.prototype.draw = function () {
 		return player.coords.y
 	}))
 	this.camera.moveTo(self.ctx.canvas.width/2, theLowest)
-	this.camera.zoom(1.001)
 
 	//Clearing canvas
 	self.ctx.save()
